@@ -17,21 +17,21 @@ int main()
         num /= 10;
         i++;
     }
-    printf("%d\n", i);
+    printf("%d\n", i);// 输出几位数
 
     while(i > 0)
     {
-        printf("%d ", num3/(int)pow(10, i-1));
+        printf("%d ", num3/(int)pow(10, i-1));  //分离每一位
         num3 %= (int)pow(10, i-1);
         i--;
     }
-    //printf("%d", num3);
     printf("\n");
+    //逆位输出
     while (num2 > 10)
     {
-        printf("%d", num2%10);
+        printf("%d", num2%10);   
         num2 /= 10;
     }
-    printf("%d", num2);
+    printf("%d", num2);    
     return 0;
 }
