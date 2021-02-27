@@ -28,3 +28,48 @@ int main()
     printf("%d", x * y / b); //最小公倍数
     return 0;
 }
+
+
+--------------我是分割线-------------
+
+//自定义函数处理最大公约数和最小公倍数
+
+int min(int , int);
+int max(int , int);
+
+int main()
+{
+    int a, b;
+    scanf("%d %d", &a, &b);
+    int m, n;
+    m = min(a, b);  //最大公约数
+    n = max(a, b);  //最小公倍数
+    printf("%d %d", m, n);
+    return 0;
+}
+
+int min(int a, int b)
+{
+    int mi;
+
+    while( (a-b) != 0)
+    {
+        if (a > b)
+        {
+            a -= b;
+        }
+        else
+        {
+            b -= a;
+        }
+    }
+    mi = a;
+    return mi;
+}
+
+int max(int a, int b)
+{
+    int ma;
+    ma = a * b / min(a, b);
+    return ma;
+}
