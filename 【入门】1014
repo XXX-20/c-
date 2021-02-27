@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    scanf("%d", &i);
+
+    int k;
+    //百分之五十错误的代码基本都是定义的变量范围过小，导致部分大数的程序产生错误。诸如int ， float ，double都会超范围。
+    //一般大数或者大数组，直接开全局变量或者是用 long long 类型，此题用 long long或者是long double 类型可以完美AC。
+    long long int fn = 1;
+    long long int sum = 0;
+    for (k = 1; k <= i; k++)
+    {
+        fn *= k;  //i的阶乘
+        sum += fn; 
+    }
+
+    printf("%lld", sum);
+    return 0;
+}
