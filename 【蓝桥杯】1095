@@ -1,0 +1,69 @@
+注意事项：
+1、输入的i一定比j小吗？
+2、程序只需交换i和j的值吗？输出时到底先输出i,还是先输出j?
+3、变量*3+1会不会数据溢出？
+
+//答案错误0一般为输出格式错误
+
+#include <stdio.h>
+//The 3n + 1 problem
+
+int CycleLength(long long int );
+
+int main()
+{
+    int i, j;
+    while( scanf("%d %d", &i, &j) != EOF )
+    {
+        int m;
+        int max = 1;
+        int temp;
+        
+        //在这里输出i和j，可以避免讨论先输出i还是j
+        printf("%d %d ", i, j);
+        
+        //判断i和j的大小，确保i小于j
+        if (i > j)
+        {
+            temp = i;
+            i = j;
+            j = temp;
+        }
+
+        //遍历i到j所有的数
+        for (m = i; m <= j; m++)
+        {
+            //寻求循环长度
+            temp = CycleLength(m);
+            if (temp > max)
+            {
+                max = temp;
+            }
+        }
+        printf("%d\n", max);
+    }
+
+    return 0;
+}
+
+int CycleLength(long long int n)
+{
+    //1这一端也算，初始为1
+    int count = 1;
+
+    while(n != 1)
+    {
+        if(n % 2 == 0)
+        {
+            n = n/2;
+            count++;
+        }
+        else
+        {
+        //这里要注意n是否会数据溢出
+            n = 3*n + 1;
+            count++;
+        }
+    }
+    return count;
+}
