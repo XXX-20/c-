@@ -1,0 +1,88 @@
+//Minesweeper by zzz in 2021.3.3
+
+#include<stdio.h>
+
+int n; //field of line
+int m; //field of column
+char a[100][100]; //store data
+
+int Minesweep(int , int );
+
+int main()
+{
+    int i, j;
+    int count = 0; //the number of times
+
+    while ( scanf("%d %d", &n, &m) && n != 0 )
+    {
+
+        //input data
+        for (i = 0; i < n; i++)
+        {
+            //this getchar() is very important!!!
+            getchar(); //clear data buffer cache
+            for (j = 0; j < m; j++)
+            {
+                scanf("%c", &a[i][j]);
+                //if c is not mine, becomes '0'
+                if (a[i][j] == '.')
+                {
+                    a[i][j] = '0';
+                }
+            }
+        }
+
+        //modify data
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < m; j++)
+            {
+                //if a[i][j] is a mine, adjacent squares 's number add 1
+                if (a[i][j] == '*')
+                {
+                    Minesweep(i, j);
+                }
+            }
+        }
+
+        //output data
+        count++;
+        printf("Field #%d:\n", count);
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < m; j++)
+            {
+                printf("%c", a[i][j]);
+                if ((j+1) % m == 0)
+                    printf("\n");
+            }
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+int Minesweep(int i, int j)
+{
+    int x, y;
+    x = i-1;
+    for (; x <= i+1; x++)
+    {
+        y = j-1;
+        for (; y <= j+1; y++)
+        {
+            //need to consider the special place of mine
+            if (x >= 0 && y >= 0 && a[x][y] != '*' && x < n && y < m)
+            {
+                a[x][y] += 1;
+            }
+        }
+    }
+}
+
+总结：
+1.注意清楚缓冲区这一细节，getchar（）函数的位置很精髓。
+2.Minesweep函数适合地雷少的情况。
+3.对于一个函数如果需要将一个二维数组作为参数传递，可以将二维数组设为全局变量。
+4.考虑问题要全面，要充分考虑到不同位置的雷对变量的影响
