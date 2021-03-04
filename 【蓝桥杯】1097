@@ -1,0 +1,43 @@
+// 蛇形矩阵 by zzz 2021.03.04
+
+#include "stdio.h"
+
+int func(int num, int diff)
+{
+    return num+diff;
+}
+
+int main()
+{
+    int n;
+
+    //Multiple sets of data
+    while( scanf("%d", &n) != EOF )
+    {
+        int i;
+        for ( i = 0; i < n; i++ )
+        {
+
+            int j = n-i;
+            int k = i+1;
+            int add = i+2, t = 0;
+            int num = 1; //the first num of every line
+            while(k)
+            {
+                num = func(num, t);
+                t++;
+                k--;
+            }
+
+            while (j)
+            {
+                printf("%d ", num);
+                num = func(num, add);
+                add++;
+                j--;
+            }
+            printf("\n");
+        }
+    }
+}
+
