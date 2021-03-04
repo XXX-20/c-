@@ -1,0 +1,59 @@
+// 2^k进制数 by zzz 2021.03.04
+
+#include "stdio.h"
+#include <math.h>
+
+int main()
+{
+    int k, w;
+    int r = 0;
+    scanf("%d %d", &k, &w);
+
+    double max = pow(2, k); //确定r是几进制数
+    //printf("%.0lf\n", max);
+    int parts; //w可以分为几部分
+    int xparts = w % k; //最左部分的二进制位数
+    int flag = 1; //恰好分完记为1
+
+    if (w % k == 0)
+    {
+        parts = w/k;
+    }
+    else
+    {
+        parts = w/k + 1;
+        flag = 0;
+    }
+    //printf("%d\n", parts);
+
+    int i; //位数，至少是2位
+    for ( i = 2; i <= parts; i++ )
+    {
+        int j; //高位大小，最小为1，最大为max-i
+        int maxj = (int)max - i; //高位最大值
+
+        //非最高位 与 最高位分开讨论（不清楚最高位二进制有几位）
+        if (i < parts || (i == parts && flag == 1))
+        {
+            //找到规律
+            for ( j = 1; j <= maxj; j++ )
+            {
+                r += j;
+            }
+        }
+        //printf("%d\n", r);
+        //最高位且不能恰好分组
+        if (i == parts && flag == 0)
+        {
+            int t = (int)pow(2, xparts-1);
+            for (j = 1; j <= t; j++)
+            {
+                r += (1 + maxj) * maxj / 2;
+                maxj--;
+            }
+        }
+    }
+
+    printf("%d", r);
+}
+
