@@ -1,0 +1,28 @@
+// Cylinder by zzz 2021.03.07
+//这是一道数学题
+
+#include "stdio.h"
+#define pi 3.141592653589  //尽量精确，否则会有50错误
+
+int main()
+{
+    double width; //the paper of width
+    double height; // the paper of height
+
+    double r;  //体积的大小与半径相关
+    double v1, v2;
+
+    while ( scanf("%lf %lf", &width, &height) != EOF && width != 0 )
+    {
+        //第一种情况：以h-2r为高
+        //可以推出： w >= 2 pi r --> r = w / 2pi
+        r = width / (2 * pi);
+        v1 = pi * r * r * (height - 2*r);
+        //第二种情况，以w为高
+        r = height / (2 * pi + 2);
+        r = 2 * r > width ? width/2 : r;
+        v2 = pi * r * r * width;
+        printf("%.3lf\n", v1 > v2 ? v1 : v2);
+    }
+
+}
