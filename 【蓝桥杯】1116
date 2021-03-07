@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char c[30];
+    while ( scanf("%s", c) != EOF)
+    {
+        int flag = 1;
+        getchar(); //清除缓冲区
+        int i,k = 1;
+        int arr[5];
+        arr[0] = -1;
+        arr[4] = (int)strlen(c);
+        //printf("%d\n", arr[4]);
+        for ( i = 0; i < strlen(c); i++ )
+        {
+            //存储'.'的下标
+            if (c[i] == '.')
+            {
+                arr[k++] = i;
+                //printf("%d ", arr[k-1]);
+            }
+        }
+/*
+        for (i = 0; i < 5; i++)
+            printf("%d ", arr[i]);
+        printf("\n");
+*/
+        int j;
+        for (j = 0; j < 4; j++)
+        {
+            //小于3位
+            if ( arr[j+1] - arr[j] < 4)
+            {
+                for (i = arr[j]+1 ; i < arr[j+1]; i++)
+                {
+                    if ( !(c[i] >= '0' && c[i] <= '9'))
+                    {
+                        flag = 0;
+                        break;
+                    }
+                }
+            }
+            //等于三位
+            if (arr[j+1] - arr[j] >= 4)
+            {
+                for (i = arr[j]+1 ; i < arr[j+1]; i++)
+                {
+                    //非数字
+                    if ( !(c[i] >= '0' && c[i] <= '9') )
+                    {
+                        flag = 0;
+                        break;
+                    }
+                    //数字越界(只需判断每一节的第一位)
+                    if( i == arr[j]+1)
+                    {
+                        if ( c[i] > '2' || (c[i] == '2' && c[i+1] > '5') || (c[i] == '2' && c[i+1] == '5' && c[i+2] > '5') )
+                        {
+                            flag = 0;
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if ( flag == 1)
+            printf("Y\n");
+        else
+            printf("N\n");
+    }
+}
+
+
+//法二：巧用scanf
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int a,b,c,d;
+    int k;
+    char s[100];
+    char end[100]={"End of file"};//用于判断是否结束
+    while(~(k=scanf("%d.%d.%d.%d",&a,&b,&c,&d)))
+    {
+        gets(s);
+        if(strcmp(s,end)==0) return 0;//判断是否结束
+        else if(s[0]!='\0') {printf("N\n");continue;} //有多余的字符串时直接打印N，并进行下一个
+        if(k==4 && a>=0 && a<=255 && b>=0 && b<=255 && c>=0 && c<=255 && d>=0 && d<=255)//判断是否符合题意
+        printf("Y\n");
+        else
+            printf("N\n");
+        fflush(stdin);//清除缓冲区
+    }
+    return 0;
+}
