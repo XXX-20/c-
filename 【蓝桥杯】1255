@@ -1,0 +1,66 @@
+//能量链
+//从能量最小的珠子开始合并即可
+
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    int total;         //珠子数量
+    scanf("%d", &total);
+
+    int array[100];
+    int i;
+    for ( i = 0; i < total; i++)
+    {
+        scanf("%d", &array[i]);
+    }
+
+    //头尾标记珠子，构造二维数组
+    int copy[total][2];
+    for (i = 0; i < total; i++)
+    {
+        if ( i < total-1)
+        {
+            copy[i][0] = array[i];
+            copy[i][1] = array[i+1];
+        }
+        else
+        {
+            copy[i][0] = array[i];
+            copy[i][1] = array[0];
+        }
+    }
+
+    //对珠子的能量大小进行排序
+    for ( i = 0; i < total; i++)
+    {
+        int j;
+        int temp;
+        for ( j = i+1; j < total; j++ )
+        {
+            if ( array[i] > array[j] )
+            {
+                temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+    }
+
+    int x,y,sum=0;
+    for(int k=0;k<total-1;k++)
+    {
+        for (int ii = 0; ii < total; ii++) {
+            if (copy[ii][0] == array[k])        //一组是前面的小，一组是后面的小
+                x = ii;
+            if (copy[ii][1] == array[k])
+                y = ii;
+        }
+        sum += copy[x][0] * copy[x][1] * copy[y][0];
+        copy[x][0] = copy[y][0];    //吞掉最小的数，后面那个数字（b[y][0]）上位，把原来[x][0]的地方占了
+        copy[y][0] = copy[y][1] = 0;  //清除剩下的一组
+    }
+    printf("%d", sum);
+    return 0;
+}
