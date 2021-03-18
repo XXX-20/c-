@@ -1,0 +1,57 @@
+/*
+思路：因为每个数只能用一次，所以最小数为123，最大数为987。
+因为比例为1：2：3，所以知道第一个数就可求其他两个数，所以abc最大为987/3=329。
+可以遍历123-329，求出其中符合条件的数。
+确定每个数字只用一次，可通过判断使用过的每个数字相加以及每个数字相乘的答案是否为 固定为1+2+…+9=45,12…*9的值
+*/
+
+#include <stdio.h>
+#include <math.h>
+#include <time.h>
+
+int sum(int num)
+{
+    int a; //hundred
+    int b; //ten
+    int c; //single
+    a = num / 100;
+    b = num / 10 % 10;
+    c = num % 10;
+    return a + b + c;
+}
+
+int product(int num)
+{
+    int a; //hundred
+    int b; //ten
+    int c; //single
+    a = num / 100;
+    b = num / 10 % 10;
+    c = num % 10;
+    return a * b * c;
+}
+
+int main()
+{
+    for (int i = 123; i <= 329; i++)
+    {
+        int mul = 1*2*3*4*5*6*7*8*9;
+        int def = 2 * i;
+        int ghi = 3 * i;
+        //这个判断条件很有总结价值
+        if ( ( sum(i)+sum(def)+sum(ghi) == 45 ) && ( product(i)*product(def)*product(ghi) == mul) )
+        {
+            printf("%d %d %d\n", i, def, ghi);
+        }
+    }
+
+    printf("\nTime used = %.2f", (double)clock() / CLOCKS_PER_SEC);
+    return 0;
+}
+
+
+输出：
+192 384 576
+219 438 657
+273 546 819
+327 654 981
